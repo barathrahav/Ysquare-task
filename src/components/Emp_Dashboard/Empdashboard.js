@@ -29,7 +29,7 @@ function Empdashboard() {
   const fetchUsers = async () => {
     try {
       const response = await axios.get("http://localhost:4004/empdetails");
-      setUsers(response.data); // Update the users state with fetched data
+      setUsers(response.data);
     } catch (error) {
       console.log(error);
     }

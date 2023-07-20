@@ -5,27 +5,29 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 import laptop from "./laptop.png";
 import axios from "axios";
 import "./Landing.css";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 function Landing() {
   const [user_id, setUser_id] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
-  
+
     const loginData = {
       user_id: user_id,
       password: password,
     };
-  
+
     try {
-      const response = await axios.post("http://localhost:4004/login", loginData);
+      const response = await axios.post(
+        "http://localhost:4004/login",
+        loginData
+      );
       console.log(response.data);
-      navigate("/Empdashboard"); // Redirect to Empdashboard on successful login
+      navigate("/Empdashboard");
     } catch (error) {
-      // Log the error and handle it appropriately
       console.log("Error:", error);
     }
   };
@@ -44,7 +46,10 @@ function Landing() {
           <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
             <h2 className="card-title">Login</h2>
             <div className="input-group mb-3 w-75 mt-3">
-              <span className="input-group-text rounded-start-pill" id="basic-addon1">
+              <span
+                className="input-group-text rounded-start-pill"
+                id="basic-addon1"
+              >
                 <FontAwesomeIcon icon={faEnvelope} />
               </span>
               <input
@@ -58,7 +63,10 @@ function Landing() {
               />
             </div>
             <div className="input-group mb-3 w-75 mt-3">
-              <span className="input-group-text rounded-start-pill" id="basic-addon1">
+              <span
+                className="input-group-text rounded-start-pill"
+                id="basic-addon1"
+              >
                 <FontAwesomeIcon icon={faLock} />
               </span>
               <input
@@ -71,7 +79,10 @@ function Landing() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button className="btn btn-success p-2 m-3 w-50 rounded-5" onClick={handleLogin}>
+            <button
+              className="btn btn-success p-2 m-3 w-50 rounded-5"
+              onClick={handleLogin}
+            >
               Login
             </button>
           </div>

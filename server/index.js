@@ -58,68 +58,67 @@ add.post("/create", (request, response) => {
 
 // Login user with their user_id and password
 add.post("/login", (request, response) => {
-    const { user_id, password } = request.body;
-  
-    const loginQuery = 'SELECT * FROM employee_details WHERE user_id = ? AND password = ?';
-  
-    conn.query(loginQuery, [user_id, password], (error, result) => {
-      if (error) {
-        response.status(500).json({ error: "Internal Server Error" });
+  const { user_id, password } = request.body;
+
+  const loginQuery =
+    "SELECT * FROM employee_details WHERE user_id = ? AND password = ?";
+
+  conn.query(loginQuery, [user_id, password], (error, result) => {
+    if (error) {
+      response.status(500).json({ error: "Internal Server Error" });
+    } else {
+      if (result.length === 0) {
+        response.status(401).json({ error: "Invalid user_id or password" });
       } else {
-        if (result.length === 0) {
-          response.status(401).json({ error: "Invalid user_id or password" });
-        } else {
-          response.json({ message: "Login successful", user: result[0] });
-        }
+        response.json({ message: "Login successful", user: result[0] });
       }
-    });
+    }
   });
+});
 
 // Fetch all employee details from the database
 add.get("/empdetails", (request, response) => {
-    const selectQuery = 'SELECT * FROM employee_details';
-  
-    conn.query(selectQuery, (error, result) => {
-      if (error) {
-        response.status(500).json({ error: "Internal Server Error" });
-      } else {
-        response.json(result);
-      }
-    });
+  const selectQuery = "SELECT * FROM employee_details";
+
+  conn.query(selectQuery, (error, result) => {
+    if (error) {
+      response.status(500).json({ error: "Internal Server Error" });
+    } else {
+      response.json(result);
+    }
   });
+});
 
 // Update user data in db
 add.put("/users/:user_id", (request, response) => {
-    const user_id = request.params.user_id;
-    const updatedData = {
-      // Get the updated user data from the request body
-      first_name: request.body.first_name,
-      last_name: request.body.last_name,
-      email: request.body.email,
-      password: request.body.password,
-      ph_no: request.body.ph_no,
-      dob: request.body.dob,
-      age: request.body.age,
-      gender: request.body.gender,
-      city: request.body.city,
-      emergency_contact: request.body.emergency_contact,
-      emergency_ph_no: request.body.emergency_ph_no,
-      dept: request.body.dept,
-      job_title: request.body.job_title,
-      salary: request.body.salary,
-      isAdmin: request.body.isAdmin,
-    };
-  
-    const updateQuery = "UPDATE employee_details SET ? WHERE user_id = ?";
-    conn.query(updateQuery, [updatedData, user_id], (error, result) => {
-      if (error) {
-        response.status(500).json({ error: "Internal Server Error" });
-      } else {
-        response.json({ message: "User data updated successfully" });
-      }
-    });
-  });
+  const user_id = request.params.user_id;
+  const updatedData = {
+    first_name: request.body.first_name,
+    last_name: request.body.last_name,
+    email: request.body.email,
+    password: request.body.password,
+    ph_no: request.body.ph_no,
+    dob: request.body.dob,
+    age: request.body.age,
+    gender: request.body.gender,
+    city: request.body.city,
+    emergency_contact: request.body.emergency_contact,
+    emergency_ph_no: request.body.emergency_ph_no,
+    dept: request.body.dept,
+    job_title: request.body.job_title,
+    salary: request.body.salary,
+    isAdmin: request.body.isAdmin,
+  };
 
+  const updateQuery = "UPDATE employee_details SET ? WHERE user_id = ?";
+  conn.query(updateQuery, [updatedData, user_id], (error, result) => {
+    if (error) {
+      response.status(500).json({ error: "Internal Server Error" });
+    } else {
+      response.json({ message: "User data updated successfully" });
+    }
+  });
+});
 
 // this is command is to make node to run in port 4004
 add.listen(4004, () => {
