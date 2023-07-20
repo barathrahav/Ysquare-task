@@ -1,0 +1,17 @@
+.Signupbg {
+    height: 100vh;
+    width: 100%;
+    background-color: #00dbde;
+    background-image: linear-gradient(90deg, #00dbde 0%, #fc00ff 100%);
+  }
+  .Signupcontainer {
+    height: 80%;
+    width: 50%;
+    background-color: whitesmoke;
+  }
+  @media (max-width: 768px) {
+    .Signupcontainer {
+      width: 90%;
+    }
+  }
+  
